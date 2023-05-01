@@ -1,0 +1,50 @@
+﻿@model SupportMVC.Models.DTO.TicketDTO
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>TicketDTO</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RequestorUserId" class="control-label"></label>
+                <input asp-for="RequestorUserId" class="form-control" />
+                <span asp-validation-for="RequestorUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Query" class="control-label"></label>
+                <input asp-for="Query" class="form-control" />
+                <span asp-validation-for="Query" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AdditionalDetails" class="control-label"></label>
+                <input asp-for="AdditionalDetails" class="form-control" />
+                <span asp-validation-for="AdditionalDetails" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TechnologyId" class="control-label"></label>
+                @*<input asp-for="TechnologyId" class="form-control" />*@
+                <select asp-for="TechnologyId" asp-items="@ViewBag.Technology"></select>
+                <input type="hidden" asp-for="TechnologyId" />
+                <span asp-validation-for="TechnologyId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
