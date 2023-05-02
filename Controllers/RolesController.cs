@@ -34,13 +34,17 @@ namespace SupportMVC.Controllers
         public async Task<IActionResult> Edit(int id, RoleDTO role)
         {
             var getrole = await _supportRepo.GetRoleAsync(id);
+            if (getrole == null)
+            {
+                return NotFound();
+            }
             getrole.RoleName = role.RoleName;
             await _supportRepo.UpdateRole(getrole);
             return RedirectToAction("Index");
         }
         [HttpGet]
         [Route("create")]
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -68,6 +72,10 @@ namespace SupportMVC.Controllers
         public async Task<IActionResult> DeleteRole(int id)
         {
             var role = await _supportRepo.GetRoleAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
             _supportRepo.DeleteRole(role);
             await _supportRepo.SaveChangesAsync();
             return RedirectToAction("Index");

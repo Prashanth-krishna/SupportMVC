@@ -40,7 +40,7 @@ namespace SupportWebAPI.Controllers
             {
                 return BadRequest();
             }
-            SMEMapping sme = new SMEMapping { SMEMappingId = 0, UserId = sMEMappingDTO.UserId, TechnologyId = sMEMappingDTO.TechnologyId };
+            SMEMapping sme = new() { SMEMappingId = 0, UserId = sMEMappingDTO.UserId, TechnologyId = sMEMappingDTO.TechnologyId };
             await _supportRepo.PostSMEMapping(sme);
             await _supportRepo.SaveChangesAsync();
             return CreatedAtAction("GetSME", new { id = sme.TechnologyId }, sme);

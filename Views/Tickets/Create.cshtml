@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="RequestorUserId" class="control-label"></label>
-                <input asp-for="RequestorUserId" class="form-control" />
+                <input asp-for="RequestorUserId" class="form-control" readonly="readonly" value="@ViewBag.RequestorId" />
                 <span asp-validation-for="RequestorUserId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -27,11 +27,10 @@
                 <input asp-for="AdditionalDetails" class="form-control" />
                 <span asp-validation-for="AdditionalDetails" class="text-danger"></span>
             </div>
+            <br />
             <div class="form-group">
                 <label asp-for="TechnologyId" class="control-label"></label>
-                @*<input asp-for="TechnologyId" class="form-control" />*@
                 <select asp-for="TechnologyId" asp-items="@ViewBag.Technology"></select>
-                <input type="hidden" asp-for="TechnologyId" />
                 <span asp-validation-for="TechnologyId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,5 +45,7 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

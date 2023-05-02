@@ -70,14 +70,12 @@ namespace SupportMVC.Services
                 .ToListAsync();
         }
 
-        public async Task<User?> GetSMEwithTechnologyId(int technologyId)
+        public async Task<IEnumerable<User>> GetSMEwithTechnologyId(int technologyId)
         {
-            var sme = await _context.SMEMapping.Where(s => s.TechnologyId == technologyId).FirstOrDefaultAsync();
-            if (sme == null)
-            {
-                return null;
-            }
-            return await _context.Users.Where(u => u.UserId == sme.UserId).FirstOrDefaultAsync();
+            var smes = await _context.SMEMapping.Where(s => s.TechnologyId == technologyId)
+                .Select(u=>u.UserId)
+                .ToListAsync();
+            return await _context.Users.Where(u => smes.Contains(u.UserId)).ToListAsync();
         }
 
         public async Task<Status?> GetStatusAsync(int id)
@@ -159,10 +157,10 @@ namespace SupportMVC.Services
         public async Task<IEnumerable<Ticket>> GetTickets()
         {
             return await _context.Ticket
-                .Include(t=>t.Requestor)
-                .Include(t=>t.SME)
-                .Include(t=>t.Technology)
-                .Include(t=>t.Status)
+                .Include(t => t.Requestor)
+                .Include(t => t.SME)
+                .Include(t => t.Technology)
+                .Include(t => t.Status)
                 .ToListAsync();
         }
 
@@ -186,6 +184,26 @@ namespace SupportMVC.Services
         {
             _context.Entry(ticket).State = EntityState.Modified;
             await SaveChangesAsync();
+        }
+        public async Task UpdateStatus(Status status)
+        {
+            _context.Entry(status).State = EntityState.Modified;
+            await SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<SMEMapping>> GetSMEsWithTechId(int techid)
+        {
+            return await _context.SMEMapping.Where(u => u.TechnologyId == techid)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<User>> GetSMEs()
+        {
+            return await _context.Users.Where(u => u.RoleId >= 2).ToListAsync();
+        }
+
+        public async Task<User?> GetUserByName(string name)
+        {
+            return await _context.Users.Where(u => u.UserName == name).FirstOrDefaultAsync();
         }
     }
 }

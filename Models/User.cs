@@ -7,7 +7,7 @@
         public string EnterpriseId { get; set; } = null!;
         public string EmailId { get; set; } = null!;
 
-        public Role Role { get; set; }
+        public Role? Role { get; set; }
         public int RoleId { get; set; }
     }
 }

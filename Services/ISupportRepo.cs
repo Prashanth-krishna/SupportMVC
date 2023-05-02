@@ -15,6 +15,7 @@ namespace SupportMVC.Services
         Task<IEnumerable<Status>> GetStatusesAsync();
         Task<Status?> GetStatusAsync(int id);
         Task PostStatus(Status status);
+        Task UpdateStatus(Status status);
         void DeleteStatus(Status status);
 
         Task<IEnumerable<Role>> GetRolesAsync();
@@ -24,13 +25,17 @@ namespace SupportMVC.Services
         void DeleteRole(Role role);
 
         Task<IEnumerable<User>> GetUsers();
+        Task<User?> GetUserByName(string name);
         Task<User?> GetUser(int id);
+
         Task PostUser(User user);
         void DeleteUser(User user);
 
         Task<IEnumerable<SMEMapping>> GetSMEMappings();
-        Task<User?> GetSMEwithTechnologyId(int technologyId);
+        Task<IEnumerable<User>> GetSMEwithTechnologyId(int technologyId);
         Task<SMEMapping?> GetSME(int smemappingid);
+        
+        Task<IEnumerable<User>> GetSMEs();
         Task PostSMEMapping(SMEMapping smemapping);
         void DeleteMapping(SMEMapping smemapping);
 
